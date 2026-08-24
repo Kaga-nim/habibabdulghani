@@ -1,0 +1,48 @@
+1. Diberikan tata bahasa bebas konteks (CFG) berikut:
+
+S -> AB | BA
+A -> aA | a
+B -> bB | b
+
+a) Gamabar pohon sintaksis untuk string "aab" yang dihasilkan dari tata bahasa di atas.
+b) Analisislah mengapa tata bahasa ini masih dapat menghasilkan string yang sama dengan urutan berbeda (ambigu).
+
+2. Buat program Python yang mensimulasikan Pushdown Automata (PDA) untuk bahasa L = {ww^R | w ∈ {a, b}}, yaitu string yang terdiri dari suatu w dan diikuti oleh kebalikan w. Contoh Input/Output:
+Input: "abba" Output:
+"Accepted"
+
+Input: "abab" Output:
+"Rejected"
+
+3. Misalkan ada sebuah Mesin Turing T yang mampu mengakui bahasa L = {a^n b^n c^n | n ≥ 1}.
+a) Analisislah mengapa bahasa ini tidak dapat diterima oleh PDA tetapi dapat diterima oleh Mesin Turing.
+b) Gambarkan transisi utama Mesin Turing yang memungkinkan pengenalan bahasa ini.
+
+4. Diberikan dua bahasa:
+L1 = {a^n b^n | n 0}
+L2 = { w w | w ∈ {a, b}^* }
+a) Tentukan kelas hierarki Chomsky dari masing-masing bahasa di atas (Regular, CFG, CSL, atau Recursive Enurable).
+b) Berikan argumen mengapa L2 lebih kompleks daripada L1.
+
+2. 
+def is_palindrome_stack(s):
+    stack = []
+    n = len(s)
+    if n % 2 != 0:
+        return "Rejected"
+    for i in range(n // 2):
+        stack.append(s[i])
+    for i in range(n // 2, n):
+        if not stack or stack.pop() != s[i]:
+            return "Rejected"
+    return "Accepted"
+
+# Contoh penggunaan:
+print(is_palindrome_stack("abba"))  # Accepted
+print(is_palindrome_stack("abab"))  # Rejected
+
+b) Mengapa L2 lebih kompleks dari L1:
+- L1 hanya mencocokkan jumlah a dan b, bisa dilakukan dengan 1 stack (PDA).
+- L2 mencocokkan seluruh string w dengan salinan persis w, membutuhkan memori tak terbatas dan pencocokan posisi → butuh Mesin Turing.
+- Maka, L2 membutuhkan model komputasi lebih kuat daripada L1.
+
